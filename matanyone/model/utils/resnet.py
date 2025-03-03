@@ -15,7 +15,7 @@ def load_weights_add_extra_dim(target, source_state, extra_dim=1):
     new_dict = OrderedDict()
 
     for k1, v1 in target.state_dict().items():
-        if not 'num_batches_tracked' in k1:
+        if 'num_batches_tracked' not in k1:
             if k1 in source_state:
                 tar_v = source_state[k1]
 

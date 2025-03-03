@@ -55,3 +55,6 @@ packages = ["matanyone"]
 [project.urls]
 "Homepage" = "https://github.com/pq-yang/MatAnyone"
 "Bug Tracker" = "https://github.com/pq-yang/MatAnyone/issues"
+
+[tool.setuptools]
+package-dir = {"" = "."}

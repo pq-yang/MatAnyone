@@ -6,7 +6,7 @@ import torch.nn as nn
 from matanyone.model.group_modules import GConv2d
 from matanyone.utils.tensor_utils import aggregate
 from matanyone.model.transformer.positional_encoding import PositionalEncoding
-from matanyone.model.transformer.transformer_layers import *
+from matanyone.model.transformer.transformer_layers import CrossAttention, SelfAttention, FFN, PixelFFN
 
 
 class QueryTransformerBlock(nn.Module):

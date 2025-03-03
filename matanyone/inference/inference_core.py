@@ -1,4 +1,4 @@
-from typing import List, Optional, Iterable, Dict
+from typing import List, Optional, Iterable
 import logging
 from omegaconf import DictConfig
 

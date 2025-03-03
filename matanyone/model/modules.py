@@ -1,8 +1,9 @@
 from typing import List, Iterable
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
-from matanyone.model.group_modules import *
+from matanyone.model.group_modules import MainToGroupDistributor, GroupResBlock, upsample_groups, GConv2d, downsample_groups
 
 
 class UpsampleBlock(nn.Module):

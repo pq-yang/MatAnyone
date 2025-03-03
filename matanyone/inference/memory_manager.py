@@ -2,12 +2,11 @@ import logging
 from omegaconf import DictConfig
 from typing import List, Dict
 import torch
-import cv2
 
 from matanyone.inference.object_manager import ObjectManager
 from matanyone.inference.kv_memory_store import KeyValueMemoryStore
 from matanyone.model.matanyone import MatAnyone
-from matanyone.model.utils.memory_utils import *
+from matanyone.model.utils.memory_utils import get_similarity, do_softmax
 
 log = logging.getLogger()
 
@@ -372,7 +371,6 @@ class MemoryManager:
             self.engaged = False
 
     def compress_features(self, bucket_id: int) -> None:
-        HW = self.HW
 
         # perform memory consolidation
         prototype_key, prototype_value, prototype_shrinkage = self.consolidation(
