@@ -140,6 +140,26 @@ The results will be saved in the `results` folder, including the foreground outp
 
 ## 🎪 Interactive Demo
 To get rid of the preparation for first-frame segmentation mask, we prepare a gradio demo on [hugging face](https://huggingface.co/spaces/PeiqingYang/MatAnyone) and could also **launch locally**. Just drop your video/image, assign the target masks with a few clicks, and get the the matting results!
+
+### Quick Start with start.py (Recommended)
+
+We provide a convenient `start.py` script that automatically handles environment checks and dependency installation:
+
+```shell
+# launch the demo with automatic setup
+python start.py
+
+# launch with custom port
+python start.py --port 7860
+
+# launch with specific SAM model
+python start.py --sam_model_type vit_h
+
+# save intermediate masks
+python start.py --mask_save
+```
+### Manual Setup
+
 ```shell
 cd hugging_face
 
