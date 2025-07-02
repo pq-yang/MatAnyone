@@ -72,6 +72,14 @@ def move_matting_to_gpu():
     except Exception as e:
         print(f"Error moving MatAnyone to GPU: {e}")
 
+def play_completion_sound():
+    """Play terminal beep sound to indicate matting completion"""
+    try:
+        print("\a")  # * Terminal bell character
+        print("🔔 Matting completed!")
+    except:
+        print("🔔 Matting completed!")
+
 def parse_augment():
     parser = argparse.ArgumentParser()
     parser.add_argument('--device', type=str, default=None)
@@ -345,6 +353,7 @@ def image_matting(video_state, interactive_state, mask_dropdown, erode_kernel_si
     # * Move MatAnyone to CPU and SAM back to GPU after matting
     move_matting_to_cpu()
     move_sam_to_gpu()
+    play_completion_sound()
 
     return foreground_output, alpha_output
 
@@ -386,6 +395,7 @@ def video_matting(video_state, interactive_state, mask_dropdown, erode_kernel_si
     # * Move MatAnyone to CPU and SAM back to GPU after matting
     move_matting_to_cpu()
     move_sam_to_gpu()
+    play_completion_sound()
     
     return foreground_output, alpha_output
 
