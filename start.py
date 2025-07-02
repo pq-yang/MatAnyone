@@ -87,7 +87,7 @@ def check_nvidia_gpu_early():
         print("to fall back to extremely slow CPU processing.", file=sys.stderr)
         print("\nPress Ctrl+C now to abort if you do not wish to proceed.", file=sys.stderr)
         print("#" * 70, file=sys.stderr)
-        time.sleep(3) # Give user a moment to react
+        input("Press Enter to continue, or Ctrl+C to abort... ") # Wait for user input
 
 def ensure_python_version():
     """Checks if the current Python version is 3.11."""
@@ -246,10 +246,7 @@ def main():
             print("#" * 60, file=sys.stderr)
             
             try:
-                for i in range(5, 0, -1):
-                    print(f"\rProceeding with CPU in {i}...", end="", file=sys.stderr)
-                    time.sleep(1)
-                print("\rProceeding with CPU now.      ")
+                input("Press Enter to continue with CPU, or Ctrl+C to abort... ")
             except KeyboardInterrupt:
                 print("\n\n👋 Aborted by user. Exiting.")
                 sys.exit(0)
