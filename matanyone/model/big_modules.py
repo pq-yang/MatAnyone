@@ -17,6 +17,7 @@ import torch.nn.functional as F
 from matanyone.model.group_modules import MainToGroupDistributor, GroupFeatureFusionBlock, GConv2d
 from matanyone.model.utils import resnet
 from matanyone.model.modules import SensoryDeepUpdater, SensoryUpdater_fullscale, DecoderFeatureProcessor, MaskUpsampleBlock
+from matanyone.utils.device import safe_autocast
 
 class UncertPred(nn.Module):
     def __init__(self, model_cfg: DictConfig):
@@ -330,7 +331,7 @@ class MaskDecoder(nn.Module):
             p4 = self.up_8_4(p8, f4)
             p2 = self.up_4_2(p4, f2)
             p1 = self.up_2_1(p2, f1)
-            with torch.amp.autocast("cuda",enabled=False):
+            with safe_autocast(enabled=False):
                 if seg_pass:
                     if last_mask is not None:
                         res = self.pred_seg(F.relu(p1.flatten(start_dim=0, end_dim=1).float()))

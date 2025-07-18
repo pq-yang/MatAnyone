@@ -1,7 +1,7 @@
 from typing import List, Iterable
 import torch
 import torch.nn.functional as F
-
+from matanyone.utils.device import safe_autocast
 
 # STM
 def pad_divide_by(in_img: torch.Tensor, d: int) -> (torch.Tensor, Iterable[int]):
@@ -45,7 +45,7 @@ def unpad(img: torch.Tensor, pad: Iterable[int]) -> torch.Tensor:
 
 # @torch.jit.script
 def aggregate(prob: torch.Tensor, dim: int) -> torch.Tensor:
-    with torch.amp.autocast("cuda",enabled=False):
+    with safe_autocast(enabled=False):
         prob = prob.float()
         new_prob = torch.cat([torch.prod(1 - prob, dim=dim, keepdim=True), prob],
                              dim).clamp(1e-7, 1 - 1e-7)

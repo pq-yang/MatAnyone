@@ -13,19 +13,23 @@ from matanyone.utils.inference_utils import gen_dilate, gen_erosion, read_frame_
 
 from matanyone.inference.inference_core import InferenceCore
 from matanyone.utils.get_default_model import get_matanyone_model
+from matanyone.utils.device import get_default_device, safe_autocast_decorator
 
 import warnings
 warnings.filterwarnings("ignore")
 
+device = get_default_device()
+
 @torch.inference_mode()
-@torch.amp.autocast("cuda")
+@safe_autocast_decorator()
 def main(input_path, mask_path, output_path, ckpt_path, n_warmup=10, r_erode=10, r_dilate=10, suffix="", save_image=False, max_size=-1):
+
     # download ckpt for the first inference
     pretrain_model_url = "https://github.com/pq-yang/MatAnyone/releases/download/v1.0.0/matanyone.pth"
     ckpt_path = load_file_from_url(pretrain_model_url, 'pretrained_models')
     
     # load MatAnyone model
-    matanyone = get_matanyone_model(ckpt_path)
+    matanyone = get_matanyone_model(ckpt_path, device)
 
     # init inference processor
     processor = InferenceCore(matanyone, cfg=matanyone.cfg)
@@ -74,7 +78,7 @@ def main(input_path, mask_path, output_path, ckpt_path, n_warmup=10, r_erode=10,
     if r_erode > 0:
         mask = gen_erosion(mask, r_erode, r_erode)
 
-    mask = torch.from_numpy(mask).cuda()
+    mask = torch.from_numpy(mask).float().to(device)
 
     if max_size > 0:  # resize needed
         mask = F.interpolate(mask.unsqueeze(0).unsqueeze(0), size=(new_h, new_w), mode="nearest")
@@ -88,7 +92,7 @@ def main(input_path, mask_path, output_path, ckpt_path, n_warmup=10, r_erode=10,
         image = vframes[ti]
 
         image_np = np.array(image.permute(1,2,0))       # for output visualize
-        image = (image / 255.).cuda().float()           # for network input
+        image = (image / 255.).float().to(device)         # for network input
 
         if ti == 0:
             output_prob = processor.step(image, mask, objects=objects)      # encode given mask

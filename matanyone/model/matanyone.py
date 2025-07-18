@@ -13,6 +13,9 @@ from matanyone.model.utils.memory_utils import get_affinity, readout
 from matanyone.model.transformer.object_transformer import QueryTransformer
 from matanyone.model.transformer.object_summarizer import ObjectSummarizer
 from matanyone.utils.tensor_utils import aggregate
+from matanyone.utils.device import get_default_device, safe_autocast
+
+device = get_default_device()
 
 log = logging.getLogger()
 class MatAnyone(nn.Module,
@@ -83,6 +86,8 @@ class MatAnyone(nn.Module,
         return uncert_output
 
     def encode_image(self, image: torch.Tensor, seq_length=None, last_feats=None) -> (Iterable[torch.Tensor], torch.Tensor): # type: ignore
+        self.pixel_mean = self.pixel_mean.to(device)
+        self.pixel_std = self.pixel_std.to(device)
         image = (image - self.pixel_mean) / self.pixel_std
         ms_image_feat = self.pixel_encoder(image, seq_length) # f16, f8, f4, f2, f1
         return ms_image_feat, self.pix_feat_proj(ms_image_feat[0])
@@ -139,7 +144,7 @@ class MatAnyone(nn.Module,
         uncert_mask = uncert_output["mask"] if uncert_output is not None else None
 
         # read using visual attention
-        with torch.amp.autocast("cuda",enabled=False):
+        with safe_autocast(enabled=False):
             affinity = get_affinity(memory_key.float(), memory_shrinkage.float(), query_key.float(),
                                     query_selection.float(), uncert_mask=uncert_mask)
 
