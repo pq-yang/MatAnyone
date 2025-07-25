@@ -18,6 +18,8 @@ from matanyone.inference.image_feature_store import ImageFeatureStore
 from matanyone.model.matanyone import MatAnyone
 from matanyone.utils.tensor_utils import pad_divide_by, unpad, aggregate
 from matanyone.utils.inference_utils import gen_dilate, gen_erosion, read_frame_from_videos
+from matanyone.utils.device import get_default_device, safe_autocast
+
 
 log = logging.getLogger()
 
@@ -29,8 +31,11 @@ class InferenceCore:
                  cfg: DictConfig = None,
                  *,
                  image_feature_store: ImageFeatureStore = None,
-                 device: Union[str, torch.device] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                 device: Optional[Union[str, torch.device]] = None
                  ):
+        if device is None:
+            device = get_default_device()
+        self.device = device
         if isinstance(network, str):
             network = MatAnyone.from_pretrained(network)
         network.to(device)
@@ -420,7 +425,7 @@ class InferenceCore:
         return new_mask
 
     @torch.inference_mode()
-    @torch.amp.autocast("cuda")
+    @safe_autocast()
     def process_video(
         self,
         input_path: str,
@@ -489,7 +494,7 @@ class InferenceCore:
         if r_erode > 0:
             mask = gen_erosion(mask, r_erode, r_erode)
         
-        mask = torch.from_numpy(mask).cuda()
+        mask = torch.from_numpy(mask).float().to(device)
         if max_size > 0:
             mask = F.interpolate(
                 mask.unsqueeze(0).unsqueeze(0), size=(new_h, new_w), mode="nearest"
@@ -503,7 +508,7 @@ class InferenceCore:
         for ti in tqdm(range(length)):
             image = vframes[ti]
             image_np = np.array(image.permute(1, 2, 0))
-            image = (image / 255.0).cuda().float()
+            image = (image / 255.0).float().to(device)
 
             if ti == 0:
                 output_prob = self.step(image, mask, objects=objects)

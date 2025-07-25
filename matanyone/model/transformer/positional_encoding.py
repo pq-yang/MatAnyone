@@ -7,6 +7,7 @@ import math
 import numpy as np
 import torch
 from torch import nn
+from matanyone.utils.device import get_default_device
 
 
 def get_emb(sin_inp: torch.Tensor) -> torch.Tensor:
@@ -98,8 +99,9 @@ class PositionalEncoding(nn.Module):
 
 
 if __name__ == '__main__':
-    pe = PositionalEncoding(8).cuda()
-    input = torch.ones((1, 8, 8, 8)).cuda()
+    device = get_default_device()
+    pe = PositionalEncoding(8).to(device)
+    input = torch.ones((1, 8, 8, 8), device=device)
     output = pe(input)
     # print(output)
     print(output[0, :, 0, 0])
