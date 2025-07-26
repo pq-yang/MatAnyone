@@ -24,6 +24,8 @@ device = get_default_device()
 @safe_autocast_decorator()
 def main(input_path, mask_path, output_path, ckpt_path, n_warmup=10, r_erode=10, r_dilate=10, suffix="", save_image=False, max_size=-1):
 
+    video_name = os.path.basename(os.path.dirname(input_path))
+
     # download ckpt for the first inference
     pretrain_model_url = "https://github.com/pq-yang/MatAnyone/releases/download/v1.0.0/matanyone.pth"
     ckpt_path = load_file_from_url(pretrain_model_url, 'pretrained_models')
@@ -41,7 +43,7 @@ def main(input_path, mask_path, output_path, ckpt_path, n_warmup=10, r_erode=10,
     max_size = int(max_size)
 
     # load input frames
-    vframes, fps, length, video_name = read_frame_from_videos(input_path)
+    vframes, fps, length, _ = read_frame_from_videos(input_path)
     repeated_frames = vframes[0].unsqueeze(0).repeat(n_warmup, 1, 1, 1) # repeat the first frame for warmup
     vframes = torch.cat([repeated_frames, vframes], dim=0).float()
     length += n_warmup  # update length

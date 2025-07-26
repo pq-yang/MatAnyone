@@ -494,7 +494,7 @@ class InferenceCore:
         if r_erode > 0:
             mask = gen_erosion(mask, r_erode, r_erode)
         
-        mask = torch.from_numpy(mask).float().to(device)
+        mask = torch.from_numpy(mask).float().to(self.device)
         if max_size > 0:
             mask = F.interpolate(
                 mask.unsqueeze(0).unsqueeze(0), size=(new_h, new_w), mode="nearest"
@@ -508,7 +508,7 @@ class InferenceCore:
         for ti in tqdm(range(length)):
             image = vframes[ti]
             image_np = np.array(image.permute(1, 2, 0))
-            image = (image / 255.0).float().to(device)
+            image = (image / 255.0).float().to(self.device)
 
             if ti == 0:
                 output_prob = self.step(image, mask, objects=objects)
