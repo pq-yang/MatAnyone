@@ -173,14 +173,20 @@ It is noteworthy that we applied **harmonization** (using [Harmonizer](https://g
 
 ### Metric Calculation
 
+**📦 We provide the inference results with MatAnyone on the YouTubeMatte benchmark [here](https://drive.google.com/file/d/1bptND1vFO0Hp68EsehIRquUmPbMuIJGf/view?usp=sharing).**
+
 To reproduce the quantitative results of YouTubeMatte reported in the paper, we provide the batch inference scripts and evaluation scripts under the `./evaluation` folder. We also provide the first-frame segmentation masks we used for evaluation [here](https://drive.google.com/file/d/1Zpa7SB7VZmkvRDiehVC-c_0dmFWXdfzK/view?usp=sharing). To run the evaluation scripts, your files should be arranged as:
 
 ```
 data
+   |- YouTubeMatte_first_frame_seg_mask   # for inference only
    |- YouTubeMatte
         |- youtubematte_512x288
         |- youtubematte_1920x1080
-   |- YouTubeMatte_first_frame_seg_mask
+
+   |- results
+        |- youtubematte_512x288
+        |- youtubematte_1920x1080
 ```
 
 Empirically, for low-resolution (`youtubematte_512x288`) and high-resolution (`youtubematte_1920x1080`) data, we set **different** hyperparameter values for `--warmup`, `--erode_kernel`, and `--dilate_kernel`.
