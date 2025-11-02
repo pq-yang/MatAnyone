@@ -201,6 +201,10 @@ bash evaluation/infer_batch_hr.sh
 python evaluation/eval_yt_hr.py
 ```
 
+Similarly, the quantitative results of VideoMatte in the paper could be reproduced in this way, with the first-frame segmentation masks [here](https://drive.google.com/file/d/1kN5gX4NAEa4HG-k2ir8kPcEp_18DbDHt/view?usp=drive_link).
+
+**📦 We also provide the inference results with MatAnyone on the VideoMatte benchmark [here](https://drive.google.com/drive/folders/1SN_7J9P-YxuI-e6QP6AOBVzyRSYR1t67?usp=drive_link).**
+
 
 ## 📑 Citation
 
