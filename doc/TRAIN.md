@@ -13,7 +13,7 @@
   * As an alternative, you may train the model using **[VideoMatte240K](https://grail.cs.washington.edu/projects/background-matting-v2/#/datasets)**, which provides 475 foreground videos with corresponding alpha mattes.
 
 * ImageMatte
-    * **We folllow the practice of [RVM](https://github.com/PeterL1n/RobustVideoMatting/blob/master/documentation/training.md) to collect ImageMatte.**
+    * We folllow the practice of [RVM](https://github.com/PeterL1n/RobustVideoMatting/blob/master/documentation/training.md) to collect ImageMatte.
     * ImageMatte consists of [Distinctions-646](https://wukaoliu.github.io/HAttMatting/) and [Adobe Image Matting](https://sites.google.com/view/deepimagematting) datasets.
     * You need to contact their authors to acquire.
     * After downloading both datasets, merge their samples together to form ImageMatte dataset.
@@ -41,7 +41,7 @@
 
 ### Segmentation Datasets
 
-* **We folllow the practice of [RVM](https://github.com/PeterL1n/RobustVideoMatting/blob/master/documentation/training.md) to collect Segmentation Datasets.**
+* We folllow the practice of [RVM](https://github.com/PeterL1n/RobustVideoMatting/blob/master/documentation/training.md) to collect Segmentation Datasets.
 
 * [COCO](https://cocodataset.org/#download)
     * Download [train2017.zip (18G)](http://images.cocodataset.org/zips/train2017.zip)
