@@ -1,0 +1,114 @@
+defaults:
+  - _self_
+  - model: base
+  - data: base
+  - override hydra/job_logging: custom
+
+hydra:
+  run:
+    dir: ./matting-logs/${exp_id}
+  output_subdir: ${now:%Y-%m-%d_%H-%M-%S}-hydra
+
+exp_id: matanyone
+debug: False
+cudnn_benchmark: True
+weights: null
+checkpoint: null
+seed: 14159265
+num_workers: 16
+
+log_text_interval: 100
+log_image_interval: 500
+save_weights_interval: 5000
+save_checkpoint_interval: 5000
+
+stage_1:
+  name: stage_1
+  enabled: True
+  batch_size: 16
+  amp: False
+  num_iterations: 80000 
+  clamp_start: 100               # do not clamp the first 100 iter to avoid zero alpha
+  learning_rate: 1.0e-4
+  lr_schedule: constant
+  point_supervision: True
+  train_num_points: 8192
+  oversample_ratio: 3.0
+  importance_sample_ratio: 0.75
+  clip_grad_norm: 3.0
+  weight_decay: 0.001
+  embed_weight_decay: 0.0
+  backbone_lr_ratio: 0.1
+  num_ref_frames: 2
+  seq_length: 3
+  num_objects: 1
+  deep_update_prob: 0.2
+  crop_size: [384, 384]
+  merge_probability: 0.5
+  max_skip_schedule: [5, 10, 15, 5]
+  max_skip_schedule_fraction: [0.0, 0.1, 0.3, 0.8]
+  frequent_save_in_last: 0
+  frequent_save_interval: 1000
+  use_video: True
+  core_supervision: False
+  
+stage_2:
+    name: stage_2
+    enabled: True
+    batch_size: 16 
+    amp: False  
+    num_iterations: 40000
+    clamp_start: 0
+    learning_rate: 1.0e-4
+    lr_schedule: constant
+    point_supervision: True
+    train_num_points: 12544
+    oversample_ratio: 3.0
+    importance_sample_ratio: 0.75
+    clip_grad_norm: 3.0
+    weight_decay: 0.001
+    embed_weight_decay: 0.0
+    backbone_lr_ratio: 0.1
+    num_ref_frames: 3
+    seq_length: 8                # seq length: 3 --> 8
+    num_objects: 1
+    deep_update_prob: 0.2
+    crop_size: [480, 480]        # crop size: 384 --> 480
+    merge_probability: 0.5
+    max_skip_schedule: [5, 10, 15, 5]
+    max_skip_schedule_fraction: [0.0, 0.1, 0.3, 0.8]
+    frequent_save_in_last: 0
+    frequent_save_interval: 1000
+    use_video: True
+    core_supervision: True       # apply core supervision
+    
+stage_3:
+  name: stage_3
+  enabled: True
+  batch_size: 16
+  amp: False
+  num_iterations: 20000
+  clamp_start: 0
+  learning_rate: 1.0e-5
+  lr_schedule: constant
+  point_supervision: True
+  train_num_points: 12544
+  oversample_ratio: 3.0
+  importance_sample_ratio: 0.75
+  clip_grad_norm: 3.0
+  weight_decay: 0.001
+  embed_weight_decay: 0.0
+  backbone_lr_ratio: 0.1
+  num_ref_frames: 3
+  seq_length: 8
+  num_objects: 1
+  deep_update_prob: 0.2
+  crop_size: [480, 480]
+  merge_probability: 0.5
+  max_skip_schedule: [5, 10, 15, 5]
+  max_skip_schedule_fraction: [0.0, 0.1, 0.3, 0.8]
+  frequent_save_in_last: 0
+  frequent_save_interval: 1000
+  use_video: False               # finetune with image matting data
+  core_supervision: True
+

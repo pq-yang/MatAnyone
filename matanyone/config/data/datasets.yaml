@@ -1,0 +1,46 @@
+# video matting datasets
+vm_datasets:
+  base: /data/pqyang/data/mat_vid
+  VM800:
+    fgr_video_directory: VM800 # VideoMatte240K as alternative
+    bg_img_directory: BG20k/train
+    bg_video_directory: DVM/train
+    multiplier: 1
+    frame_interval: 1
+
+# image matting datasets
+im_datasets:
+  base: /data/pqyang/data/
+  ImageMatte:
+    fgr_img_directory: mat_img/ImageMatte/train
+    bg_img_directory: mat_vid/BG20k/train
+    bg_video_directory: mat_vid/DVM/train
+    multiplier: 1
+
+# video segmentation datasets
+vos_datasets:
+  base: /data/pqyang/data/seg_vid
+  YouTubeVOS:
+    image_directory: YouTubeVIS/train/JPEGImages
+    mask_directory: YouTubeVIS/train/instances.json
+    multiplier: 1
+    frame_interval: 5
+
+# image segmentation datasets
+image_datasets:
+  base: /data/pqyang/data/seg_img
+  COCO:
+    imgdir: coco/train2017
+    anndir: coco/panoptic_train2017
+    annfile: coco/annotations/panoptic_train2017.json
+    multiplier: 1
+  SPD:
+    imgdir: SuperviselyPersonDataset/img
+    anndir: SuperviselyPersonDataset/seg
+    annfile: null
+    multiplier: 1
+
+
+
+
+

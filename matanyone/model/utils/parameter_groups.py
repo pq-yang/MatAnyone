@@ -50,6 +50,8 @@ def get_parameter_groups(model, stage_cfg, print_log=False):
 
         if not inserted:
             other_params.append(param)
+            if print_log:
+                log.info(f'{name} counted as other parameter.')
 
     parameter_groups = [
         {

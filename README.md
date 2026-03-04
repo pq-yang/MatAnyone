@@ -46,8 +46,10 @@
 ---
 </div>
 
+## 🚀 Please check out our new release on [MatAnyone 2](https://github.com/pq-yang/MatAnyone2)
 
 ## 📮 Update
+- [2026.03] Release training codes ([TRAIN.md](https://github.com/pq-yang/MatAnyone/blob/main/doc/TRAIN.md)).
 - [2025.07] Update [Evaluation](https://github.com/pq-yang/MatAnyone?tab=readme-ov-file#-evaluation) with scripts and instructions.
 - [2025.03] Release our evaluation benchmark - [YouTubeMatte](https://github.com/pq-yang/MatAnyone?tab=readme-ov-file#-evaluation).
 - [2025.03] Integrate MatAnyone with Hugging Face 🤗
@@ -155,6 +157,8 @@ By launching, an interactive interface will appear as follow:
 
 ![overall_teaser](assets/teaser_demo.gif)
 
+## 👩🏻‍💻 Training
+Please refer to [TRAIN.md](https://github.com/pq-yang/MatAnyone/blob/main/doc/TRAIN.md) for instructions.
 
 ## 📊 Evaluation
 
@@ -194,11 +198,15 @@ Empirically, for low-resolution (`youtubematte_512x288`) and high-resolution (`y
 ```shell
 # lr: youtubematte_512x288
 bash evaluation/infer_batch_lr.sh
-python evaluation/eval_yt_lr.py
+python evaluation/eval_yt_lr.py \
+    --pred-dir ./data/results/youtubematte_512x288 \
+    --true-dir ./data/YouTubeMatte/youtubematte_512x288 
 
 # hr: youtubematte_1920x1080
 bash evaluation/infer_batch_hr.sh
-python evaluation/eval_yt_hr.py
+python evaluation/eval_yt_hr.py \
+    --pred-dir ./data/results/youtubematte_1920x1080 \
+    --true-dir ./data/YouTubeMatte/youtubematte_1920x1080 
 ```
 
 Similarly, the quantitative results of VideoMatte in the paper could be reproduced in this way, with the first-frame segmentation masks [here](https://drive.google.com/file/d/1kN5gX4NAEa4HG-k2ir8kPcEp_18DbDHt/view?usp=drive_link).
@@ -225,7 +233,7 @@ This project is licensed under <a rel="license" href="./LICENSE">NTU S-Lab Licen
 
 ## 👏 Acknowledgement
 
-This project is built upon [Cutie](https://github.com/hkchengrex/Cutie), with the interactive demo adapted from [ProPainter](https://github.com/sczhou/ProPainter), leveraging segmentation capabilities from [Segment Anything Model](https://github.com/facebookresearch/segment-anything) and [Segment Anything Model 2](https://github.com/facebookresearch/sam2). Thanks for their awesome works!
+This project is built upon [Cutie](https://github.com/hkchengrex/Cutie), with matting dataset files adapted from [RVM](https://github.com/PeterL1n/RobustVideoMatting). The interactive demo is adapted from [ProPainter](https://github.com/sczhou/ProPainter), leveraging segmentation capabilities from [Segment Anything Model](https://github.com/facebookresearch/segment-anything) and [Segment Anything Model 2](https://github.com/facebookresearch/sam2). Thanks for their awesome works!
 
 ---
 

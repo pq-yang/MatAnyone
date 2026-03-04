@@ -49,6 +49,7 @@ dependencies = [
   'imageio[ffmpeg]',
   'huggingface_hub',
   'safetensors',
+  'easing_functions'
 ]
 
 [tool.hatch.build.targets.wheel]
