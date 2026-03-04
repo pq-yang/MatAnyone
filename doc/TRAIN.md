@@ -37,12 +37,11 @@
         * [Train set (14.6G)](https://robustvideomatting.blob.core.windows.net/data/BackgroundVideosTrain.tar) (Manually move some clips to validation set)
         * [Test set (936M)](https://robustvideomatting.blob.core.windows.net/data/BackgroundVideosTest.tar) (Not needed for training. Only used for making synthetic test samples for evaluation)
 * Image Backgrounds
-    * We download from [BG-20k](https://github.com/JizhiziLi/GFM?tab=readme-ov-file#bg-20k), which contains 20,000 high-resolution background images excluded salient objects
+    * We download from [BG-20k](https://github.com/JizhiziLi/GFM?tab=readme-ov-file#bg-20k), which contains 20,000 high-resolution background images excluded salient objects.
 
 ### Segmentation Datasets
 
 * We folllow the practice of [RVM](https://github.com/PeterL1n/RobustVideoMatting/blob/master/documentation/training.md) to collect Segmentation Datasets.
-
 * [COCO](https://cocodataset.org/#download)
     * Download [train2017.zip (18G)](http://images.cocodataset.org/zips/train2017.zip)
     * Download [panoptic_annotations_trainval2017.zip (821M)](http://images.cocodataset.org/annotations/panoptic_annotations_trainval2017.zip)
@@ -56,7 +55,7 @@
 
 -----
 
-After you have downloaded the datasets. Please configure `matanyone/config/data/datasets.yaml` to provide paths to your datasets. To run the training scripts, the directory structure should look like this under your data folder:
+After you have downloaded the datasets, please configure `matanyone/config/data/datasets.yaml` to provide paths to your datasets. To run the training scripts, the directory structure should look like this under your data folder:
 
 ```bash
 ├── mat_vid
